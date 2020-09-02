@@ -1,10 +1,39 @@
 # -*- coding: utf-8 -*-
 
+import abc
 import argparse
+import datetime
+import itertools
 import json
 import os
 
 from safari import Safari
+
+
+class Exporter(object):
+    @abc.abstractmethod
+    def export(self, filename):
+        raise NotImplementedError()
+
+
+class OrgExporter(Exporter):
+    def format_org_link(self, title, url):
+        timestamp = datetime.datetime.now().strftime("%Y-%m-%d %a %H:%M")
+
+        return f"* [[{url}][{title}]]\n[{timestamp}]"
+
+    def export(self, results, filename):
+        with open(filename, mode="w") as f:
+            f.writelines(
+                f"{self.format_org_link(**item)}\n\n"
+                for item in itertools.chain.from_iterable(results.values())
+            )
+
+
+class JsonExporter(Exporter):
+    def export(self, results, filename):
+        with open(filename, mode="w") as f:
+            json.dump(results, f, ensure_ascii=False, indent=4)
 
 
 def parse_args():
@@ -37,16 +66,26 @@ def parse_args():
 
 def main():
     args = parse_args()
-    safari = Safari(os.path.abspath(os.path.expanduser(args.library)))
 
+    # Fetch bookmarks.
+    safari = Safari(os.path.abspath(os.path.expanduser(args.library)))
     sources = {"bookmarks", "readings"}
     if args.source != "all":
         sources = {args.source}
-
     results = {source: list(getattr(safari, source)) for source in sources}
 
-    with open(args.target, mode="w") as f:
-        json.dump(results, f, ensure_ascii=False, indent=4)
+    # Export bookmarks.
+    exporters = {
+        ".org": OrgExporter(),
+        ".json": JsonExporter(),
+    }
+    ext = os.path.splitext(args.target)[1]
+    if not ext:
+        ext = ".org"
+    exporter = exporters.get(ext)
+    if not exporter:
+        raise TypeError(f"Unsupported file type: {ext}")
+    exporter.export(results, args.target)
 
 
 if __name__ == "__main__":
