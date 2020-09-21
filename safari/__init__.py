@@ -31,7 +31,7 @@ class Safari(object):
             }
 
     @property
-    def bookmarks(self):
+    def cloud_tabs(self):
         with sqlite3.connect(self.db_file) as conn:
             c = conn.cursor()
 

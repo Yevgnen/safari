@@ -57,8 +57,8 @@ def parse_args():
         "-s",
         "--source",
         type=str,
-        default="bookmarks",
-        help="Bookmark types ('bookmarks', 'readings', 'all') (default: 'bookmarks')",
+        default="readings",
+        help="Bookmark types ('cloud_tabs', 'readings', 'all') (default: 'readings')",
     )
     parser.add_argument(
         "-t",
@@ -87,7 +87,7 @@ def main():
 
     # Fetch bookmarks.
     safari = Safari(os.path.abspath(os.path.expanduser(args.library)))
-    sources = {"bookmarks", "readings"}
+    sources = {"cloud_tabs", "readings"}
     if args.source != "all":
         sources = {args.source}
     results = {source: list(getattr(safari, source)) for source in sources}
