@@ -8,12 +8,21 @@ import json
 import os
 
 from safari import Safari
+from safari.utils import copy_to_clipboard
 
 
 class Exporter(object):
     @abc.abstractmethod
-    def export(self, filename):
+    def to_string(self, results):
         raise NotImplementedError()
+
+    @abc.abstractmethod
+    def export_to_file(self, filename):
+        raise NotImplementedError()
+
+    def export_to_clipboard(self, results):
+        string = self.to_string(results)
+        copy_to_clipboard(string)
 
 
 class OrgExporter(Exporter):
@@ -22,16 +31,22 @@ class OrgExporter(Exporter):
 
         return f"* [[{url}][{title}]]\n[{timestamp}]"
 
-    def export(self, results, filename):
+    def to_string(self, results):
+        return "".join(
+            f"{self.format_org_link(**item)}\n\n"
+            for item in itertools.chain.from_iterable(results.values())
+        )
+
+    def export_to_file(self, results, filename):
         with open(filename, mode="w") as f:
-            f.writelines(
-                f"{self.format_org_link(**item)}\n\n"
-                for item in itertools.chain.from_iterable(results.values())
-            )
+            f.writelines(self.to_string(results))
 
 
 class JsonExporter(Exporter):
-    def export(self, results, filename):
+    def to_string(self, results):
+        return json.dumps(results)
+
+    def export_to_file(self, results, filename):
         with open(filename, mode="w") as f:
             json.dump(results, f, ensure_ascii=False, indent=4)
 
@@ -49,8 +64,11 @@ def parse_args():
         "-t",
         "--target",
         type=str,
-        default="safari_exported.json",
-        help="Output file name. (default 'safari_exported.json')",
+        default=None,
+        help=(
+            "Output file name. None means clipboard, "
+            "org format will be used. (default: None)"
+        ),
     )
     parser.add_argument(
         "-l",
@@ -75,6 +93,11 @@ def main():
     results = {source: list(getattr(safari, source)) for source in sources}
 
     # Export bookmarks.
+    if not args.target:
+        exporter = OrgExporter()
+        exporter.export_to_clipboard(results)
+        return
+
     exporters = {
         ".org": OrgExporter(),
         ".json": JsonExporter(),
@@ -85,7 +108,7 @@ def main():
     exporter = exporters.get(ext)
     if not exporter:
         raise TypeError(f"Unsupported file type: {ext}")
-    exporter.export(results, args.target)
+    exporter.export_to_file(results, args.target)
 
 
 if __name__ == "__main__":
