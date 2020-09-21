@@ -24,7 +24,7 @@ class Safari(object):
         if not bookmarks:
             return
 
-        for bookmark in bookmarks["Children"]:
+        for bookmark in bookmarks.get("Children", []):
             yield {
                 "title": bookmark["URIDictionary"]["title"],
                 "url": bookmark["URLString"],
