@@ -4,13 +4,14 @@ import os
 import plistlib
 from typing import Dict, Iterable, Union
 
+from safari.resource import DEFAULT_LIBRARY_PATH, SafariResource
+
 URLItem = Dict[str, str]
 
 
-class SafariBookmarks(object):
-    def __init__(
-        self, library: str = os.path.join(os.environ["HOME"], "Library", "Safari")
-    ):
+class SafariBookmarks(SafariResource):
+    def __init__(self, library: str = DEFAULT_LIBRARY_PATH):
+        super().__init__(library=library)
         self.bookmark_file = os.path.join(library, "Bookmarks.plist")
         self.bookmark_plist = None
 

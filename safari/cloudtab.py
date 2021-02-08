@@ -5,12 +5,12 @@ import sqlite3
 from typing import Dict, Iterable
 
 from safari.bookmark import URLItem
+from safari.resource import DEFAULT_LIBRARY_PATH, SafariResource
 
 
-class SafariCloudTabs(object):
-    def __init__(
-        self, library: str = os.path.join(os.environ["HOME"], "Library", "Safari")
-    ):
+class SafariCloudTabs(SafariResource):
+    def __init__(self, library: str = DEFAULT_LIBRARY_PATH):
+        super().__init__(library=library)
         self.cloud_tab_file = os.path.join(library, "CloudTabs.db")
 
     def get_devices(self) -> Iterable[Dict[str, str]]:

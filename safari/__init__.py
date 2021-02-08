@@ -1,17 +1,14 @@
 # -*- coding: utf-8 -*-
 
-import os
 from typing import Dict, Iterable, List, Union
 
-from safari import bookmark, cloudtab, commands, exporter, formater
+from safari import bookmark, cloudtab, commands, exporter, formater, resource
 from safari.bookmark import SafariBookmarks, URLItem
 from safari.cloudtab import SafariCloudTabs
 
 
 class Safari(object):
-    def __init__(
-        self, library: str = os.path.join(os.environ["HOME"], "Library", "Safari")
-    ):
+    def __init__(self, library: str = resource.DEFAULT_LIBRARY_PATH):
         self.cloudtab = SafariCloudTabs(library=library)
         self.bookmark = SafariBookmarks(library=library)
 
@@ -43,4 +40,5 @@ __all__ = [
     "commands",
     "bookmark",
     "cloudtab",
+    "resource",
 ]
