@@ -10,7 +10,12 @@ setup(
     author="Yevgnen Koh",
     author_email="wherejoystarts@gmail.com",
     packages=find_packages(),
-    entry_points={"console_scripts": ["safari_export=safari.safari_export:main"]},
+    entry_points={
+        "console_scripts": [
+            "safari=safari.commands.safari_main:main",
+            "safari-export=safari.commands.safari_export:main",
+        ],
+    },
     include_package_data=True,
     install_requires=[],
     zip_safe=False,

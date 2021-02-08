@@ -1,0 +1,53 @@
+#+title: Safari
+#+options: ^:nil
+
+* Table of Contents :TOC:
+- [[#introduction][Introduction]]
+- [[#installation][Installation]]
+  - [[#from-pip][From pip]]
+  - [[#from-source][From source]]
+- [[#usages][Usages]]
+  - [[#exporting-reading-listcloud-tabs][Exporting reading list/cloud tabs]]
+  - [[#using-the-safari-script][Using the ~safari~ script]]
+- [[#contribution][Contribution]]
+  - [[#formatting-code][Formatting Code]]
+
+* Introduction
+
+~safari~ is a Python library for manipulating Safari data.
+
+* Installation
+
+** From pip
+
+#+begin_src sh
+pip install safari
+#+end_src
+
+** From source
+
+#+begin_src sh
+pip install git+https://github.com/Yevgnen/safari.git
+#+end_src
+
+* Usages
+
+** Exporting reading list/cloud tabs
+
+#+include: examples/export.py src Python
+
+** Using the ~safari~ script
+
+#+begin_src sh
+safari export -s all -t output.yaml
+#+end_src
+
+* Contribution
+
+** Formatting Code
+
+To ensure the codebase complies with a style guide, please use [[https://github.com/PyCQA/flake8][flake8]], [[https://github.com/psf/black][black]] and [[https://github.com/PyCQA/isort][isort]] tools to format and check codebase for compliance with PEP8.
+
+# Local Variables:
+# eval: (add-hook 'before-save-hook (lambda nil (org-pandoc-export-to-gfm)) nil t)
+# End:

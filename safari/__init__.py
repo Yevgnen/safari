@@ -1,54 +1,65 @@
 # -*- coding: utf-8 -*-
 
 import os
-import plistlib
 import sqlite3
+from typing import Dict, Iterable, List, Union
+
+from safari import bookmark, commands, exporter, formater
+from safari.bookmark import SafariBookmarks, URLItem
 
 
 class Safari(object):
-    def __init__(self, library=os.path.join(os.environ["HOME"], "Library/Safari/")):
-        self.bookmark_file = os.path.join(library, "Bookmarks.plist")
-        self.db_file = os.path.join(library, "CloudTabs.db")
+    def __init__(
+        self, library: str = os.path.join(os.environ["HOME"], "Library", "Safari")
+    ):
+        self.bookmark = SafariBookmarks(library=library)
+        self.cloud_tab_file = os.path.join(library, "CloudTabs.db")
 
-    @property
-    def readings(self):
-        with open(self.bookmark_file, mode="rb") as plist_file:
-            plist = plistlib.load(plist_file)
+    def get_devices(self) -> Iterable[Dict[str, str]]:
+        with sqlite3.connect(self.cloud_tab_file) as conn:
+            sql = "select device_uuid, device_name from cloud_tab_devices;"
 
-        bookmarks = None
-        for child in plist["Children"]:
-            if child.get("Title", None) == "com.apple.ReadingList":
-                bookmarks = child
-                break
+            for id_, name in conn.cursor().execute(sql):
+                yield {
+                    "id": id_,
+                    "name": name,
+                }
 
-        if not bookmarks:
-            return
-
-        for bookmark in bookmarks.get("Children", []):
-            yield {
-                "title": bookmark["URIDictionary"]["title"],
-                "url": bookmark["URLString"],
-            }
-
-    @property
-    def cloud_tabs(self):
-        with sqlite3.connect(self.db_file) as conn:
-            c = conn.cursor()
-
-            sql_iphone_device = (
-                'select device_uuid from cloud_tab_devices where device_name="iPhone";'
-            )
-            iphone_id = next((x[0] for x in c.execute(sql_iphone_device)), None,)
-            if not iphone_id:
-                raise RuntimeError("iPhone device_id not found")
-
-            sql_links = (
-                f'select title, url from cloud_tabs where device_uuid="{iphone_id}";'
-            )
-            tabs = c.execute(sql_links)
-
-            for tab in tabs:
+    def get_device_cloud_tabs(self, device_id: str) -> Iterable[URLItem]:
+        with sqlite3.connect(self.cloud_tab_file) as conn:
+            sql = f'select title, url from cloud_tabs where device_uuid="{device_id}";'
+            for tab in conn.cursor().execute(sql):
                 yield {
                     "title": tab[0],
                     "url": tab[1],
                 }
+
+    def get_cloud_tabs(self) -> Iterable[URLItem]:
+        for device in self.get_devices():
+            yield {**device, "tabs": list(self.get_device_cloud_tabs(device["id"]))}
+
+    def get_readings(self) -> Iterable[URLItem]:
+        return self.bookmark.get_readings()
+
+    def get_bookmarks(self, flatten: bool = True) -> Union[Iterable[URLItem], Dict]:
+        return self.bookmark.get_bookmarks(flatten=flatten)
+
+    def export(self, kind: str = "all") -> Dict[str, List]:
+        factory = {
+            "cloud_tabs": self.get_cloud_tabs,
+            "readings": self.get_readings,
+            "bookmarks": self.get_bookmarks,
+        }
+        if kind != "all":
+            factory = {kind: factory[kind]}
+
+        return {k: list(v()) for k, v in factory.items()}
+
+
+__all__ = [
+    "Safari",
+    "exporter",
+    "formater",
+    "commands",
+    "bookmark",
+]
