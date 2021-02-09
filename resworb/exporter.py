@@ -12,6 +12,7 @@ import yaml
 class ExportMixin(object):
     def export(self, kind: str = "all") -> Dict[str, List]:
         factory = {
+            "opened_tabs": self.get_opened_tabs,
             "cloud_tabs": self.get_cloud_tabs,
             "readings": self.get_readings,
             "bookmarks": self.get_bookmarks,

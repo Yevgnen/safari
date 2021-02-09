@@ -1,6 +1,7 @@
 # -*- coding: utf-8 -*-
 
 import glob
+import json
 import os
 import sqlite3
 from typing import Dict, Iterable, Union
@@ -9,10 +10,33 @@ from resworb.base import (
     BookmarkMixin,
     CloudTabMixin,
     HistoryMixin,
+    OpenedTabMixin,
     ReadingMixin,
     URLItem,
 )
 from resworb.exporter import ExportMixin
+
+
+class FirefoxOpenedTabs(OpenedTabMixin):
+    def get_opened_tabs(self) -> Iterable[URLItem]:
+        # References:
+        # https://gist.github.com/tmonjalo/33c4402b0d35f1233020bf427b5539fa
+        # pylint: disable=import-outside-toplevel
+        import lz4.block
+
+        with open(self.session_file, mode="rb") as f:
+            bytes = f.read()
+            if bytes[:8] == b"mozLz40\0":
+                bytes = lz4.block.decompress(bytes[8:])
+                data = json.loads(bytes)
+
+                for window in data["windows"]:
+                    for tab in window["tabs"]:
+                        i = tab["index"] - 1
+                        yield {
+                            "title": tab["entries"][i]["title"],
+                            "url": tab["entries"][i]["url"],
+                        }
 
 
 class FirefoxCloudTabs(CloudTabMixin):
@@ -91,16 +115,31 @@ DEFAULT_LIBRARY_PATH = os.path.join(
 
 
 class Firefox(
-    ExportMixin, FirefoxCloudTabs, FirefoxReadings, FirefoxBookmarks, FirefoxHistories
+    ExportMixin,
+    FirefoxOpenedTabs,
+    FirefoxCloudTabs,
+    FirefoxReadings,
+    FirefoxBookmarks,
+    FirefoxHistories,
 ):
     def __init__(self, library: str = DEFAULT_LIBRARY_PATH):
         super().__init__()
 
         self.library = library
 
-        files = glob.glob(
+        session_files = glob.glob(
+            os.path.join(
+                self.library, "*.default*", "sessionstore-backups", "recovery.jsonlz4"
+            ),
+            recursive=True,
+        )
+        if not session_files:
+            raise RuntimeError(f"Session file not found in {self.library}")
+        self.session_file = session_files[0]
+
+        history_files = glob.glob(
             os.path.join(self.library, "*.default*", "places.sqlite"), recursive=True
         )
-        if not files:
+        if not history_files:
             raise RuntimeError(f"History file not found in {self.library}")
-        self.history_file = files[0]
+        self.history_file = history_files[0]

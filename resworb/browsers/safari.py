@@ -9,10 +9,16 @@ from resworb.base import (
     BookmarkMixin,
     CloudTabMixin,
     HistoryMixin,
+    OpenedTabMixin,
     ReadingMixin,
     URLItem,
 )
 from resworb.exporter import ExportMixin
+
+
+class SafariOpenedTabs(OpenedTabMixin):
+    def get_opened_tabs(self) -> Iterable[URLItem]:
+        raise NotImplementedError()
 
 
 class SafariCloudTabs(CloudTabMixin):
@@ -142,7 +148,12 @@ DEFAULT_LIBRARY_PATH = os.path.join(os.environ["HOME"], "Library", "Safari")
 
 
 class Safari(
-    ExportMixin, SafariCloudTabs, SafariReadings, SafariBookmarks, SafariHistories
+    ExportMixin,
+    SafariOpenedTabs,
+    SafariCloudTabs,
+    SafariReadings,
+    SafariBookmarks,
+    SafariHistories,
 ):
     def __init__(self, library: str = DEFAULT_LIBRARY_PATH):
         super().__init__()

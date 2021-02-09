@@ -5,6 +5,11 @@ from typing import Dict, Iterable, Union
 URLItem = Dict[str, str]
 
 
+class OpenedTabMixin(object):
+    def get_opened_tabs(self) -> Iterable[URLItem]:
+        raise NotImplementedError()
+
+
 class CloudTabMixin(object):
     def get_cloud_tabs(self) -> Iterable[URLItem]:
         raise NotImplementedError()

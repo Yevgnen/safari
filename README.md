@@ -22,7 +22,7 @@
 
 |              | Safari | Firefox | Chrome |
 |--------------|--------|---------|--------|
-| Opened tabs  |        |         |        |
+| Opened tabs  |        | ✅       |        |
 | Cloud tabs   | ✅      |         |        |
 | Reading list | ✅      |         |        |
 | Bookmarks    | ✅      | ✅       |        |
@@ -80,3 +80,4 @@ To ensure the codebase complies with a style guide, please use [flake8](https://
 -   [Parse Safari Reading List using Python · GitHub](https://gist.github.com/ghutchis/f7362256064e3ad82aaf583511fca503)
 -   [helper/SafariBookmarkEditor at master · jedetaste/helper · GitHub](https://github.com/jedetaste/helper/blob/master/bin/SafariBookmarkEditor)
 -   [python-catalin: Get bookmarks from your Firefox browser database.](https://python-catalin.blogspot.com/2019/03/get-bookmarks-from-your-firefox-browser.html)
+-   [List all Firefox tabs with title and URL · GitHub](https://gist.github.com/tmonjalo/33c4402b0d35f1233020bf427b5539fa)

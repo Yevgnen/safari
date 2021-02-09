@@ -15,7 +15,7 @@ def add_arguments(parser):
         type=str,
         default="all",
         help=(
-            "Resource types ('cloud_tabs', 'readings', 'bookmarks', 'all') "
+            "Resource types ('opened_tabs', 'cloud_tabs', 'readings', 'bookmarks', 'all') "
             "(default: 'all')"
         ),
     )

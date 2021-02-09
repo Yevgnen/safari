@@ -8,10 +8,16 @@ from resworb.base import (
     BookmarkMixin,
     CloudTabMixin,
     HistoryMixin,
+    OpenedTabMixin,
     ReadingMixin,
     URLItem,
 )
 from resworb.exporter import ExportMixin
+
+
+class ChromeOpenedTabs(OpenedTabMixin):
+    def get_opened_tabs(self) -> Iterable[URLItem]:
+        raise NotImplementedError()
 
 
 class ChromeCloudTabs(CloudTabMixin):
@@ -51,7 +57,12 @@ DEFAULT_LIBRARY_PATH = os.path.join(
 
 
 class Chrome(
-    ExportMixin, ChromeCloudTabs, ChromeReadings, ChromeBookmarks, ChromeHistories
+    ExportMixin,
+    ChromeOpenedTabs,
+    ChromeCloudTabs,
+    ChromeReadings,
+    ChromeBookmarks,
+    ChromeHistories,
 ):
     def __init__(self, library: str = DEFAULT_LIBRARY_PATH):
         super().__init__()
