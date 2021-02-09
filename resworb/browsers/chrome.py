@@ -1,5 +1,6 @@
 # -*- coding: utf-8 -*-
 
+import json
 import os
 import sqlite3
 from typing import Dict, Iterable, Union
@@ -32,7 +33,24 @@ class ChromeReadings(ReadingMixin):
 
 class ChromeBookmarks(BookmarkMixin):
     def get_bookmarks(self, flatten: bool = True) -> Union[Iterable[URLItem], Dict]:
-        raise NotImplementedError()
+        def _get_bookmarks(node, folders):
+            children = node.get("children")
+            if children is not None:
+                for child in children:
+                    yield from _get_bookmarks(child, folders + [node["name"]])
+            else:
+                yield {
+                    "title": node["name"],
+                    "url": node["url"],
+                    "folders": folders,
+                }
+
+        with open(self.bookmark_file, mode="r") as f:
+            data = json.load(f)
+
+        roots = data.get("roots", {})
+        for root_key, root_value in roots.items():
+            yield from _get_bookmarks(root_value, [root_value["name"]])
 
 
 class ChromeHistories(HistoryMixin):
@@ -68,4 +86,5 @@ class Chrome(
         super().__init__()
 
         self.library = library
+        self.bookmark_file = os.path.join(library, "Bookmarks")
         self.history_file = os.path.join(library, "History")

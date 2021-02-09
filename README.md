@@ -25,7 +25,7 @@
 | Opened tabs  | ✅      | ✅       |        |
 | Cloud tabs   | ✅      |         |        |
 | Reading list | ✅      |         |        |
-| Bookmarks    | ✅      | ✅       |        |
+| Bookmarks    | ✅      | ✅       | ✅      |
 | Histories    | ✅      | ✅       | ✅      |
 
 # Installation
