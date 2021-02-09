@@ -2,10 +2,14 @@
 # -*- coding: utf-8 -*-
 
 import argparse
+import logging
 import os
 
 from resworb.browsers.safari import Safari
 from resworb.exporter import JSONExporter, PickleExporter, TOMLExporter, YAMLExporter
+
+logging.basicConfig(level=logging.INFO)
+logger = logging.getLogger(__name__)
 
 
 def add_arguments(parser):
@@ -65,6 +69,13 @@ def export(source: str, target: str, library: str) -> None:
     records = Safari(library=library).export(source)
 
     exporter.export_to_file(records, target)
+
+    logger.info("Export statistics:")
+    for source, data in records.items():
+        if source == "cloud_tabs":
+            logger.info("%s\t%d", source, sum(len(x["tabs"]) for x in data))
+        else:
+            logger.info("%s\t%d", source, len(data))
 
 
 def main():
