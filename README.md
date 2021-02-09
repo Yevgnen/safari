@@ -8,6 +8,7 @@
 -   [Usages](#usages)
     -   [Exporting user data (opened tabs, reading list, cloud tabs, bookmarks, histories)](#exporting-user-data-opened-tabs-reading-list-cloud-tabs-bookmarks-histories)
     -   [Using scripts](#using-scripts)
+    -   [Notes](#notes)
 -   [Contribution](#contribution)
     -   [Formatting Code](#formatting-code)
 -   [References](#references)
@@ -15,8 +16,6 @@
 # Introduction
 
 `resworb` is a Python library for manipulating browser data.
-
-*Currently on tested on macOS.*
 
 ## Supported resources (WIP)
 
@@ -67,6 +66,11 @@ print(safari.export(kind="all"))
 ``` bash
 safari export -s all -t output.yaml
 ```
+
+## Notes
+
+1.  *Currently on tested on macOS.*
+2.  Some interfaces may only work as expected when the browser is not running.
 
 # Contribution
 
