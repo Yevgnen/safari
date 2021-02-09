@@ -31,6 +31,8 @@ pip install git+https://github.com/Yevgnen/resworb.git
 
 # Usages
 
+Please note that the browser database may be locked if your browser is running.
+
 ## Exporting user data (reading list, cloud tabs, bookmarks, histories)
 
 ``` Python
