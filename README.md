@@ -6,7 +6,7 @@
     -   [From pip](#from-pip)
     -   [From source](#from-source)
 -   [Usages](#usages)
-    -   [Exporting user data (reading list, cloud tabs, bookmarks, histories)](#exporting-user-data-reading-list-cloud-tabs-bookmarks-histories)
+    -   [Exporting user data (opened tabs, reading list, cloud tabs, bookmarks, histories)](#exporting-user-data-opened-tabs-reading-list-cloud-tabs-bookmarks-histories)
     -   [Using scripts](#using-scripts)
 -   [Contribution](#contribution)
     -   [Formatting Code](#formatting-code)
@@ -22,7 +22,7 @@
 
 |              | Safari | Firefox | Chrome |
 |--------------|--------|---------|--------|
-| Opened tabs  |        | ✅       |        |
+| Opened tabs  | ✅      | ✅       |        |
 | Cloud tabs   | ✅      |         |        |
 | Reading list | ✅      |         |        |
 | Bookmarks    | ✅      | ✅       |        |
@@ -46,7 +46,7 @@ pip install git+https://github.com/Yevgnen/resworb.git
 
 Please note that the browser database may be locked if your browser is running.
 
-## Exporting user data (reading list, cloud tabs, bookmarks, histories)
+## Exporting user data (opened tabs, reading list, cloud tabs, bookmarks, histories)
 
 ``` Python
 # -*- coding: utf-8 -*-
@@ -81,3 +81,5 @@ To ensure the codebase complies with a style guide, please use [flake8](https://
 -   [helper/SafariBookmarkEditor at master · jedetaste/helper · GitHub](https://github.com/jedetaste/helper/blob/master/bin/SafariBookmarkEditor)
 -   [python-catalin: Get bookmarks from your Firefox browser database.](https://python-catalin.blogspot.com/2019/03/get-bookmarks-from-your-firefox-browser.html)
 -   [List all Firefox tabs with title and URL · GitHub](https://gist.github.com/tmonjalo/33c4402b0d35f1233020bf427b5539fa)
+-   [This AppleScript saves all the tabs open in all Safari windows to a Markdown file. · GitHub](https://gist.github.com/kshiteesh/b72e93d31d65008fcd11)
+-   [Find Safari Tabs with AppleScript](https://hea-www.harvard.edu/~fine/OSX/safari-tabs.html)

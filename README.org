@@ -8,7 +8,7 @@
   - [[#from-pip][From pip]]
   - [[#from-source][From source]]
 - [[#usages][Usages]]
-  - [[#exporting-user-data-reading-list-cloud-tabs-bookmarks-histories][Exporting user data (reading list, cloud tabs, bookmarks, histories)]]
+  - [[#exporting-user-data-opened-tabs-reading-list-cloud-tabs-bookmarks-histories][Exporting user data (opened tabs, reading list, cloud tabs, bookmarks, histories)]]
   - [[#using-scripts][Using scripts]]
 - [[#contribution][Contribution]]
   - [[#formatting-code][Formatting Code]]
@@ -24,7 +24,7 @@
 
 |              | Safari | Firefox | Chrome |
 |--------------+--------+---------+--------|
-| Opened tabs  |        | ✅      |        |
+| Opened tabs  | ✅     | ✅      |        |
 | Cloud tabs   | ✅     |         |        |
 | Reading list | ✅     |         |        |
 | Bookmarks    | ✅     | ✅      |        |
@@ -48,7 +48,7 @@ pip install git+https://github.com/Yevgnen/resworb.git
 
 Please note that the browser database may be locked if your browser is running.
 
-** Exporting user data (reading list, cloud tabs, bookmarks, histories)
+** Exporting user data (opened tabs, reading list, cloud tabs, bookmarks, histories)
 
 #+include: examples/export.py src Python
 
@@ -71,6 +71,8 @@ To ensure the codebase complies with a style guide, please use [[https://github.
 - [[https://github.com/jedetaste/helper/blob/master/bin/SafariBookmarkEditor][helper/SafariBookmarkEditor at master · jedetaste/helper · GitHub]]
 - [[https://python-catalin.blogspot.com/2019/03/get-bookmarks-from-your-firefox-browser.html][python-catalin: Get bookmarks from your Firefox browser database.]]
 - [[https://gist.github.com/tmonjalo/33c4402b0d35f1233020bf427b5539fa][List all Firefox tabs with title and URL · GitHub]]
+- [[https://gist.github.com/kshiteesh/b72e93d31d65008fcd11][This AppleScript saves all the tabs open in all Safari windows to a Markdown file. · GitHub]]
+- [[https://hea-www.harvard.edu/~fine/OSX/safari-tabs.html][Find Safari Tabs with AppleScript]]
 
 # Local Variables:
 # eval: (add-hook 'before-save-hook (lambda nil (org-pandoc-export-to-gfm)) nil t)

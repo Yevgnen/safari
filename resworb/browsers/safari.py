@@ -3,6 +3,8 @@
 import os
 import plistlib
 import sqlite3
+import subprocess
+import tempfile
 from typing import Dict, Iterable, Union
 
 from resworb.base import (
@@ -18,7 +20,62 @@ from resworb.exporter import ExportMixin
 
 class SafariOpenedTabs(OpenedTabMixin):
     def get_opened_tabs(self) -> Iterable[URLItem]:
-        raise NotImplementedError()
+        # References & credits:
+        # https://gist.github.com/kshiteesh/b72e93d31d65008fcd11
+        #
+        # Modifications:
+        # 1. Don't activate Safari.
+        # 2. Don't use markdown format when output.
+        # 3. Write to temp file instead of prompting for a filename.
+
+        temp = tempfile.mkstemp(text=True)[1]
+
+        script = f"""
+        -- NAME OF REPORT TITLE
+        property report_Title : "URL List from Safari"
+
+        -- PREPARE THE LIST
+        set url_list to {{}}
+
+        -- GET TABS FROM SAFARI
+        set window_count to 1
+        tell application "Safari"
+                set safariWindow to windows
+                repeat with w in safariWindow
+                        try
+                                repeat with t in (tabs of w)
+                                        set TabInfo to (URL of t & "\t" & NAME of t)
+                                        copy TabInfo to the end of url_list
+                                end repeat
+                        end try
+                        set window_count to window_count + 1
+                end repeat
+        end tell
+
+        -- CONVERT URL_LIST TO TEXT
+        set old_delim to AppleScript's text item delimiters
+        set AppleScript's text item delimiters to return
+        set url_list to url_list as text
+        set AppleScript's text item delimiters to old_delim
+
+        --WRITE THE FILE
+        tell application "System Events"
+                set save_File to open for access ("{temp}" as string) with write permission
+                try
+                        write url_list to save_File as «class utf8»
+                end try
+                close access save_File
+        end tell
+        """
+        subprocess.run(["osascript", "-e", script], check=True)
+
+        with open(temp, mode="r") as f:
+            for line in f:
+                url, title = line.split("\t")
+                yield {
+                    "title": title.rstrip(),
+                    "url": url,
+                }
 
 
 class SafariCloudTabs(CloudTabMixin):
