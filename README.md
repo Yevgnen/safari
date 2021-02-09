@@ -15,6 +15,8 @@
 
 `resworb` is a Python library for manipulating browser data.
 
+*Currently on tested on macOS.*
+
 # Installation
 
 ## From pip
