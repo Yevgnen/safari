@@ -26,8 +26,45 @@ class FirefoxReadings(ReadingMixin):
 
 
 class FirefoxBookmarks(BookmarkMixin):
+    def _get_bookmarks_folders(self):
+        with sqlite3.connect(self.history_file) as conn:
+            sql = """
+            SELECT id, type, parent, title
+            FROM moz_bookmarks
+            WHERE type=2;
+            """
+            columns = ["id", "type", "parent", "title"]
+
+            return [dict(zip(columns, r)) for r in conn.cursor().execute(sql)]
+
     def get_bookmarks(self, flatten: bool = True) -> Union[Iterable[URLItem], Dict]:
-        raise NotImplementedError()
+        bookmark_folders = self._get_bookmarks_folders()
+        bookmark_folders = {x["id"]: x for x in bookmark_folders}
+
+        def _get_bookmark_folders(parent):
+            folders = []
+            folder = bookmark_folders[parent]
+            while folder["parent"] > 0:
+                folders += [folder["title"]]
+                folder = bookmark_folders[folder["parent"]]
+
+            return list(reversed(folders))
+
+        with sqlite3.connect(self.history_file) as conn:
+            sql = """
+            SELECT type, parent, moz_bookmarks.title, moz_places.url
+            FROM moz_bookmarks
+            INNER JOIN moz_places on moz_bookmarks.fk=moz_places.id
+            WHERE type=1
+            ORDER BY dateAdded desc;
+            """
+
+            for type, parent, title, url in conn.cursor().execute(sql):
+                yield {
+                    "title": title,
+                    "url": url,
+                    "folders": _get_bookmark_folders(parent),
+                }
 
 
 class FirefoxHistories(HistoryMixin):
