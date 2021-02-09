@@ -14,7 +14,7 @@ class SafariCloudTabs(SafariResource):
 
     def get_devices(self) -> Iterable[Dict[str, str]]:
         with sqlite3.connect(self.cloud_tab_file) as conn:
-            sql = "select device_uuid, device_name from cloud_tab_devices;"
+            sql = "SELECT device_uuid, device_name FROM cloud_tab_devices;"
 
             for id_, name in conn.cursor().execute(sql):
                 yield {
@@ -24,7 +24,7 @@ class SafariCloudTabs(SafariResource):
 
     def get_device_cloud_tabs(self, device_id: str) -> Iterable[URLItem]:
         with sqlite3.connect(self.cloud_tab_file) as conn:
-            sql = f'select title, url from cloud_tabs where device_uuid="{device_id}";'
+            sql = f'SELECT title, url FROM cloud_tabs WHERE device_uuid="{device_id}";'
             for tab in conn.cursor().execute(sql):
                 yield {
                     "title": tab[0],
