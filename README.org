@@ -3,6 +3,7 @@
 
 * Table of Contents :TOC:
 - [[#introduction][Introduction]]
+  - [[#supported-resources-wip][Supported resources (WIP)]]
 - [[#installation][Installation]]
   - [[#from-pip][From pip]]
   - [[#from-source][From source]]
@@ -18,6 +19,15 @@
 ~resworb~ is a Python library for manipulating browser data.
 
 /Currently on tested on macOS./
+
+** Supported resources (WIP)
+
+|              | Safari | Firefox | Chrome |
+|--------------+--------+---------+--------|
+| Cloud tabs   | ✅     |         |        |
+| Reading list | ✅     |         |        |
+| Bookmarks    | ✅     | ✅      |        |
+| Histories    | ✅     | ✅      | ✅     |
 
 * Installation
 
@@ -58,6 +68,7 @@ To ensure the codebase complies with a style guide, please use [[https://github.
 - [[https://github.com/kcp18/browserhistory][GitHub - kcp18/browserhistory: A simple Python module that extracts browser history]]
 - [[https://gist.github.com/ghutchis/f7362256064e3ad82aaf583511fca503][Parse Safari Reading List using Python · GitHub]]
 - [[https://github.com/jedetaste/helper/blob/master/bin/SafariBookmarkEditor][helper/SafariBookmarkEditor at master · jedetaste/helper · GitHub]]
+- [[https://python-catalin.blogspot.com/2019/03/get-bookmarks-from-your-firefox-browser.html][python-catalin: Get bookmarks from your Firefox browser database.]]
 
 # Local Variables:
 # eval: (add-hook 'before-save-hook (lambda nil (org-pandoc-export-to-gfm)) nil t)
