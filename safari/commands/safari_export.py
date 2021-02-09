@@ -5,7 +5,7 @@ import argparse
 import os
 
 from safari import Safari
-from safari.exporter import JSONExporter, TOMLExporter, YAMLExporter
+from safari.exporter import JSONExporter, PickleExporter, TOMLExporter, YAMLExporter
 
 
 def add_arguments(parser):
@@ -53,6 +53,8 @@ def export(source: str, target: str, library: str) -> None:
         ".yaml": YAMLExporter,
         ".toml": TOMLExporter,
         ".json": JSONExporter,
+        ".pkl": PickleExporter,
+        ".pickle": PickleExporter,
     }
     file_type = os.path.splitext(target)[1]
     exporter_class = export_factory.get(file_type)
