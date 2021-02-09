@@ -2,7 +2,7 @@
 
 import argparse
 
-from safari.commands import safari_export
+from resworb.commands import safari_export
 
 
 def parse_args():

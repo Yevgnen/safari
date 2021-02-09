@@ -6,27 +6,27 @@
     -   [From source](#from-source)
 -   [Usages](#usages)
     -   [Exporting user data (reading list, cloud tabs, bookmarks, histories)](#exporting-user-data-reading-list-cloud-tabs-bookmarks-histories)
-    -   [Using the `safari` script](#using-the-safari-script)
+    -   [Using scripts](#using-scripts)
 -   [Contribution](#contribution)
     -   [Formatting Code](#formatting-code)
 -   [References](#references)
 
 # Introduction
 
-`safari` is a Python library for manipulating Safari data.
+`resworb` is a Python library for manipulating browser data.
 
 # Installation
 
 ## From pip
 
 ``` bash
-pip install safari
+pip install resworb
 ```
 
 ## From source
 
 ``` bash
-pip install git+https://github.com/Yevgnen/safari.git
+pip install git+https://github.com/Yevgnen/resworb.git
 ```
 
 # Usages
@@ -36,7 +36,7 @@ pip install git+https://github.com/Yevgnen/safari.git
 ``` Python
 # -*- coding: utf-8 -*-
 
-from safari import Safari
+from resworb.browsers.safari import Safari
 
 safari = Safari()
 
@@ -47,7 +47,7 @@ print(safari.export(kind="histories"))
 print(safari.export(kind="all"))
 ```
 
-## Using the `safari` script
+## Using scripts
 
 ``` bash
 safari export -s all -t output.yaml

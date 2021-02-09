@@ -4,8 +4,8 @@
 import argparse
 import os
 
-from safari import Safari
-from safari.exporter import JSONExporter, PickleExporter, TOMLExporter, YAMLExporter
+from resworb.browsers.safari import Safari
+from resworb.exporter import JSONExporter, PickleExporter, TOMLExporter, YAMLExporter
 
 
 def add_arguments(parser):

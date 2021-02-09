@@ -3,17 +3,17 @@
 from setuptools import find_packages, setup
 
 setup(
-    name="safari",
-    description="Python utilities for Safari.",
+    name="resworb",
+    description="Manage browser data in Python.",
     version="1.2.0",
-    url="https://github.com/Yevgnen/safari",
+    url="https://github.com/Yevgnen/resworb",
     author="Yevgnen Koh",
     author_email="wherejoystarts@gmail.com",
     packages=find_packages(),
     entry_points={
         "console_scripts": [
-            "safari=safari.commands.safari_main:main",
-            "safari-export=safari.commands.safari_export:main",
+            "safari=resworb.commands.safari_main:main",
+            "safari-export=resworb.commands.safari_export:main",
         ],
     },
     include_package_data=True,

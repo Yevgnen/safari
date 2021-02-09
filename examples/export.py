@@ -1,6 +1,6 @@
 # -*- coding: utf-8 -*-
 
-from safari import Safari
+from resworb.browsers.safari import Safari
 
 safari = Safari()
 

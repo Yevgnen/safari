@@ -3,10 +3,24 @@
 import abc
 import json
 import pickle
-from typing import Any, Mapping, Optional
+from typing import Any, Dict, List, Mapping, Optional
 
 import pytoml
 import yaml
+
+
+class ExportMixin(object):
+    def export(self, kind: str = "all") -> Dict[str, List]:
+        factory = {
+            "cloud_tabs": self.get_cloud_tabs,
+            "readings": self.get_readings,
+            "bookmarks": self.get_bookmarks,
+            "histories": self.get_histories,
+        }
+        if kind != "all":
+            factory = {kind: factory[kind]}
+
+        return {k: list(v()) for k, v in factory.items()}
 
 
 class Exporter(object, metaclass=abc.ABCMeta):
