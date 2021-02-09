@@ -2,7 +2,7 @@
 
 from typing import Dict, Iterable, List, Union
 
-from safari import bookmark, cloudtab, commands, exporter, formater, history, resource
+from safari import bookmark, cloudtab, commands, exporter, history, resource
 from safari.bookmark import SafariBookmarks
 from safari.cloudtab import SafariCloudTabs
 from safari.history import SafariHistories
@@ -43,7 +43,6 @@ class Safari(object):
 __all__ = [
     "Safari",
     "exporter",
-    "formater",
     "commands",
     "bookmark",
     "cloudtab",
