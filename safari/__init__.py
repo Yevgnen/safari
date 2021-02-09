@@ -2,15 +2,17 @@
 
 from typing import Dict, Iterable, List, Union
 
-from safari import bookmark, cloudtab, commands, exporter, formater, resource
+from safari import bookmark, cloudtab, commands, exporter, formater, history, resource
 from safari.bookmark import SafariBookmarks, URLItem
 from safari.cloudtab import SafariCloudTabs
+from safari.history import SafariHistories
 
 
 class Safari(object):
     def __init__(self, library: str = resource.DEFAULT_LIBRARY_PATH):
         self.cloudtab = SafariCloudTabs(library=library)
         self.bookmark = SafariBookmarks(library=library)
+        self.history = SafariHistories(library=library)
 
     def get_cloud_tabs(self) -> Iterable[URLItem]:
         return self.cloudtab.get_cloud_tabs()
@@ -21,11 +23,15 @@ class Safari(object):
     def get_bookmarks(self, flatten: bool = True) -> Union[Iterable[URLItem], Dict]:
         return self.bookmark.get_bookmarks(flatten=flatten)
 
+    def get_histories(self) -> Iterable[Dict]:
+        return self.history.get_histories()
+
     def export(self, kind: str = "all") -> Dict[str, List]:
         factory = {
             "cloud_tabs": self.get_cloud_tabs,
             "readings": self.get_readings,
             "bookmarks": self.get_bookmarks,
+            "histories": self.get_histories,
         }
         if kind != "all":
             factory = {kind: factory[kind]}
@@ -40,5 +46,6 @@ __all__ = [
     "commands",
     "bookmark",
     "cloudtab",
+    "history",
     "resource",
 ]

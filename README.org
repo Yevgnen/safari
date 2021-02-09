@@ -7,7 +7,7 @@
   - [[#from-pip][From pip]]
   - [[#from-source][From source]]
 - [[#usages][Usages]]
-  - [[#exporting-reading-listcloud-tabs][Exporting reading list/cloud tabs]]
+  - [[#exporting-user-data-reading-list-cloud-tabs-bookmarks-histories][Exporting user data (reading list, cloud tabs, bookmarks, histories)]]
   - [[#using-the-safari-script][Using the ~safari~ script]]
 - [[#contribution][Contribution]]
   - [[#formatting-code][Formatting Code]]
@@ -32,7 +32,7 @@ pip install git+https://github.com/Yevgnen/safari.git
 
 * Usages
 
-** Exporting reading list/cloud tabs
+** Exporting user data (reading list, cloud tabs, bookmarks, histories)
 
 #+include: examples/export.py src Python
 

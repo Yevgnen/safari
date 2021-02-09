@@ -5,7 +5,7 @@
     -   [From pip](#from-pip)
     -   [From source](#from-source)
 -   [Usages](#usages)
-    -   [Exporting reading list/cloud tabs](#exporting-reading-listcloud-tabs)
+    -   [Exporting user data (reading list, cloud tabs, bookmarks, histories)](#exporting-user-data-reading-list-cloud-tabs-bookmarks-histories)
     -   [Using the `safari` script](#using-the-safari-script)
 -   [Contribution](#contribution)
     -   [Formatting Code](#formatting-code)
@@ -30,7 +30,7 @@ pip install git+https://github.com/Yevgnen/safari.git
 
 # Usages
 
-## Exporting reading list/cloud tabs
+## Exporting user data (reading list, cloud tabs, bookmarks, histories)
 
 ``` Python
 # -*- coding: utf-8 -*-
@@ -42,6 +42,7 @@ safari = Safari()
 print(safari.export(kind="cloud_tabs"))
 print(safari.export(kind="readings"))
 print(safari.export(kind="bookmarks"))
+print(safari.export(kind="histories"))
 print(safari.export(kind="all"))
 ```
 
