@@ -22,6 +22,7 @@
 
 |              | Safari | Firefox | Chrome |
 |--------------|--------|---------|--------|
+| Opened tabs  |        |         |        |
 | Cloud tabs   | ✅      |         |        |
 | Reading list | ✅      |         |        |
 | Bookmarks    | ✅      | ✅       |        |
