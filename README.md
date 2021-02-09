@@ -9,6 +9,7 @@
     -   [Exporting user data (opened tabs, reading list, cloud tabs, bookmarks, histories)](#exporting-user-data-opened-tabs-reading-list-cloud-tabs-bookmarks-histories)
     -   [Using scripts](#using-scripts)
     -   [Notes](#notes)
+-   [TODO](#todo)
 -   [Contribution](#contribution)
     -   [Formatting Code](#formatting-code)
 -   [References](#references)
@@ -71,6 +72,14 @@ safari export -s all -t output.yaml
 
 1.  *Currently on tested on macOS.*
 2.  Some interfaces may only work as expected when the browser is not running.
+
+# TODO
+
+-   Better exception handling.
+-   Cross-platform support.
+    -   Support for Linux, Windows.
+    -   Remove platform dependent code.
+-   Fine-grained interfaces.
 
 # Contribution
 
