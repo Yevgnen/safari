@@ -11,6 +11,7 @@
   - [[#using-the-safari-script][Using the ~safari~ script]]
 - [[#contribution][Contribution]]
   - [[#formatting-code][Formatting Code]]
+- [[#references][References]]
 
 * Introduction
 
@@ -47,6 +48,12 @@ safari export -s all -t output.yaml
 ** Formatting Code
 
 To ensure the codebase complies with a style guide, please use [[https://github.com/PyCQA/flake8][flake8]], [[https://github.com/psf/black][black]] and [[https://github.com/PyCQA/isort][isort]] tools to format and check codebase for compliance with PEP8.
+
+* References
+
+- [[https://github.com/kcp18/browserhistory][GitHub - kcp18/browserhistory: A simple Python module that extracts browser history]]
+- [[https://gist.github.com/ghutchis/f7362256064e3ad82aaf583511fca503][Parse Safari Reading List using Python · GitHub]]
+- [[https://github.com/jedetaste/helper/blob/master/bin/SafariBookmarkEditor][helper/SafariBookmarkEditor at master · jedetaste/helper · GitHub]]
 
 # Local Variables:
 # eval: (add-hook 'before-save-hook (lambda nil (org-pandoc-export-to-gfm)) nil t)

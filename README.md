@@ -9,6 +9,7 @@
     -   [Using the `safari` script](#using-the-safari-script)
 -   [Contribution](#contribution)
     -   [Formatting Code](#formatting-code)
+-   [References](#references)
 
 # Introduction
 
@@ -57,3 +58,9 @@ safari export -s all -t output.yaml
 ## Formatting Code
 
 To ensure the codebase complies with a style guide, please use [flake8](https://github.com/PyCQA/flake8), [black](https://github.com/psf/black) and [isort](https://github.com/PyCQA/isort) tools to format and check codebase for compliance with PEP8.
+
+# References
+
+-   [GitHub - kcp18/browserhistory: A simple Python module that extracts browser history](https://github.com/kcp18/browserhistory)
+-   [Parse Safari Reading List using Python · GitHub](https://gist.github.com/ghutchis/f7362256064e3ad82aaf583511fca503)
+-   [helper/SafariBookmarkEditor at master · jedetaste/helper · GitHub](https://github.com/jedetaste/helper/blob/master/bin/SafariBookmarkEditor)
