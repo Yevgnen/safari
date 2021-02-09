@@ -3,9 +3,10 @@
 from typing import Dict, Iterable, List, Union
 
 from safari import bookmark, cloudtab, commands, exporter, formater, history, resource
-from safari.bookmark import SafariBookmarks, URLItem
+from safari.bookmark import SafariBookmarks
 from safari.cloudtab import SafariCloudTabs
 from safari.history import SafariHistories
+from safari.resource import URLItem
 
 
 class Safari(object):

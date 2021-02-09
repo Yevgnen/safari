@@ -3,7 +3,7 @@
 import abc
 import datetime
 
-from safari.bookmark import URLItem
+from safari.resource import URLItem
 
 
 class Formater(object, metaclass=abc.ABCMeta):

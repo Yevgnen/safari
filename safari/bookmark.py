@@ -4,9 +4,7 @@ import os
 import plistlib
 from typing import Dict, Iterable, Union
 
-from safari.resource import DEFAULT_LIBRARY_PATH, SafariResource
-
-URLItem = Dict[str, str]
+from safari.resource import DEFAULT_LIBRARY_PATH, SafariResource, URLItem
 
 
 class SafariBookmarks(SafariResource):

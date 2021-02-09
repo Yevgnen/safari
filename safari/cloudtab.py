@@ -4,8 +4,7 @@ import os
 import sqlite3
 from typing import Dict, Iterable
 
-from safari.bookmark import URLItem
-from safari.resource import DEFAULT_LIBRARY_PATH, SafariResource
+from safari.resource import DEFAULT_LIBRARY_PATH, SafariResource, URLItem
 
 
 class SafariCloudTabs(SafariResource):
