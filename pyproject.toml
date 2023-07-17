@@ -4,10 +4,14 @@ version = "1.2.0"
 description = "Python utilities for Safari."
 authors = ["Yevgnen Koh <wherejoystarts@gmail.com>"]
 
+[tool.poetry.scripts]
+safari="safari.commands.safari_main:main"
+safari-export="safari.commands.safari_export:main"
+
 [tool.poetry.dependencies]
 python = "^3.8"
 pytoml = "^0.1.21"
-PyYAML = "^5.4.1"
+PyYAML = "^6.0"
 
 [tool.poetry.dev-dependencies]
 autoflake = "^1.4"
